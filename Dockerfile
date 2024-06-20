@@ -1,4 +1,4 @@
-FROM python:3.11-slim as python-base
+FROM python:3.12-slim as python-base
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
     \
-    POETRY_VERSION=1.0.3 \
+    POETRY_VERSION=1.5.1 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_NO_INTERACTION=1 \
@@ -17,18 +17,15 @@ ENV PYTHONUNBUFFERED=1 \
 
 ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
-RUN apt-get update && apt-get install -y --no-install-recommends -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
-    build-essential
+    build-essential \
+    libpq-dev
 
-RUN pip install poetry poetry init
-
-RUN apt-get update\
-    && apt-get -y install libpq-dev gcc \
-    && pip install psycopg2
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
 WORKDIR $PYSETUP_PATH
-COPY poetry.lock pyproject.toml ./
+COPY pyproject.toml poetry.lock ./
 
 RUN poetry install
 
@@ -38,4 +35,4 @@ COPY . /app/
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
