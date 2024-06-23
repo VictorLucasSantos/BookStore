@@ -29,7 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-IS_TESTING = 'test' in sys.argv
+#IS_TESTING = 'test' in sys.argv
 
 # Application definition
 
@@ -58,8 +58,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware"
 ]
 
-if DEBUG and not IS_TESTING:
-    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
+#if DEBUG and not IS_TESTING:
+#    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
 
 ROOT_URLCONF = "BookStore.urls"
 
