@@ -29,7 +29,7 @@ DEBUG = True
 
 #ALLOWED_HOSTS = []
 
-#IS_TESTING = 'test' in sys.argv
+IS_TESTING = 'test' in sys.argv
 
 # Application definition
 
@@ -45,11 +45,9 @@ INSTALLED_APPS = [
     "order",
     "rest_framework",
     "rest_framework.authtoken",
-    #"debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,8 +57,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware"
 ]
 
-#if DEBUG and not IS_TESTING:
-#    MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
+
+if DEBUG and not IS_TESTING:
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 ROOT_URLCONF = "BookStore.urls"
 
