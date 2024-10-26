@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,8 +27,9 @@ SECRET_KEY = "django-insecure-y1zg#jt!)sjkay*innuh6sd7i5o=@er35s2@nq(jdc-7g^d#74
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
+IS_TESTING = 'test' in sys.argv
 
 # Application definition
 
@@ -43,19 +45,22 @@ INSTALLED_APPS = [
     "order",
     "rest_framework",
     "rest_framework.authtoken",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware"
 ]
+
+
+if DEBUG and not IS_TESTING:
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 ROOT_URLCONF = "BookStore.urls"
 
@@ -146,3 +151,5 @@ REST_FRAMEWORK = {
 }
 
 INTERNAL_IPS = ["127.0.0.1", ]
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'VictorLucas240502.pythonanywhere.com']
