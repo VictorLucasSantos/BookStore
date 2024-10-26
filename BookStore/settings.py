@@ -152,4 +152,4 @@ REST_FRAMEWORK = {
 
 INTERNAL_IPS = ["127.0.0.1", ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ebac-bookstore-api.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'VictorLucas240502.pythonanywhere.com']
