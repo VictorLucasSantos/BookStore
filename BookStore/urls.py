@@ -23,7 +23,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from BookStore import views
 
 urlpatterns = [
-    path("", include(debug_toolbar.urls)),
+    path("__debug__/", include(debug_toolbar.urls)),
     path("admin/", admin.site.urls),
     re_path("BookStore/(?P<version>(v1|v2))/", include("order.urls")),
     re_path("BookStore/(?P<version>(v1|v2))/", include("product.urls")),
