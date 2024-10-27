@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework.authtoken.views import obtain_auth_token
 
-import views
+from BookStore import views
 
 urlpatterns = [
     path("__debug__/", include(debug_toolbar.urls)),
